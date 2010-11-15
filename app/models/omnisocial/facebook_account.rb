@@ -1,6 +1,7 @@
 module Omnisocial
   class FacebookAccount < LoginAccount
     def assign_account_info(auth_hash)
+      self.token              = auth_hash['credentials']['token']
       self.remote_account_id  = auth_hash['uid']
       self.login              = auth_hash['user_info']['nickname']
       self.name               = auth_hash['user_info']['name']
