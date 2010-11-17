@@ -3,6 +3,9 @@ class CreateOmnisocialTables < ActiveRecord::Migration
     create_table :users do |t|
       t.string :remember_token
       # Any additional fields here
+      t.string :display_name
+      t.string :email_address
+      t.string :picture_url
       
       t.timestamps
     end

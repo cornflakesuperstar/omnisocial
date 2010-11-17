@@ -18,12 +18,5 @@ module Omnisocial
       end
     end
   
-    def find_or_create_user
-      return self.user if self.user
-    
-      ::User.create do |user|
-        user.login_account = self
-      end
-    end
   end
 end

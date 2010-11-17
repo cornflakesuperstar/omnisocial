@@ -1,26 +1,26 @@
 module Omnisocial
   class User < ActiveRecord::Base
-    has_one :login_account, :class_name => 'Omnisocial::LoginAccount', :dependent => :destroy
-    delegate :login, :name, :picture_url, :account_url, :to => :login_account
+    has_many :login_accounts, :class_name => 'Omnisocial::LoginAccount', :dependent => :destroy
+    validates_presence_of :display_name, :email_address
   
-    def to_param
-      if !self.login.include?('profile.php?')
-        "#{self.id}-#{self.login.gsub('.', '-')}"
-      else
-        self.id.to_s
-      end
+    def facebook_account
+      login_accounts.select{|account| account.kind_of? FacebookAccount}.first
     end
-  
-    def from_twitter?
-      login_account.kind_of? TwitterAccount
-    end
-  
+
     def from_facebook?
-      login_account.kind_of? FacebookAccount
+      !!facebook_account
+    end
+
+    def from_twitter?
+      !!twitter_account
+    end
+  
+    def twitter_account
+      login_accounts.select{|account| account.kind_of? TwitterAccount}.first
     end
 
     def remember
-      update_attributes(:remember_token => ::BCrypt::Password.create("#{Time.now}-#{self.login_account.type}-#{self.login}")) unless new_record?
+      update_attributes(:remember_token => ::BCrypt::Password.create("#{Time.now}-#{self.login_accounts.first.type}-#{self.login_accounts.first.login}")) unless new_record?
     end
   
     def forget

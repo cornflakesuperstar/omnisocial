@@ -20,9 +20,9 @@ class ActionController::Base
     session[:return_to] = request.fullpath
   end
   
-  def deny_access
+  def deny_access(url = nil)
     store_location
-    redirect_to login_path
+    redirect_to url || login_path
   end
   
   def redirect_back_or_default(default)
@@ -32,7 +32,7 @@ class ActionController::Base
   
   def current_user
     @current_user ||= if session[:user_id]
-      User.find(session[:user_id])
+      User.find_by_id(session[:user_id])
     elsif cookies[:remember_token]
       User.find_by_remember_token(cookies[:remember_token])
     else

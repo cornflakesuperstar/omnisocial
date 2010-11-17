@@ -11,17 +11,35 @@ module Omnisocial
     end
   
     def callback    
-      account = case request.env['rack.auth']['provider']
+      @account = case request.env['rack.auth']['provider']
         when 'twitter' then
           Omnisocial::TwitterAccount.find_or_create_from_auth_hash(request.env['rack.auth'])
         when 'facebook' then
           Omnisocial::FacebookAccount.find_or_create_from_auth_hash(request.env['rack.auth'])
       end
+      if current_user && @account.user != current_user
+        @account.update_attributes(:user => current_user) 
+      end
+      if @account.user
+        self.current_user = @account.user
+        flash[:message] = 'You have logged in successfully.'
+        redirect_back_or_default(root_path)
+      else
+        @user = User.new(:display_name => @account.name)
+      end
+    end
     
-      self.current_user = account.find_or_create_user
-      
-      flash[:message] = 'You have logged in successfully.'
-      redirect_back_or_default(session['return_to'] || root_path)
+    def confirm
+      @account = Omnisocial::LoginAccount.find(params[:account_id])
+      @user = User.new(params[:omnisocial_user].merge(:picture_url => @account.picture_url))
+      if @user.save
+        @account.update_attributes(:user => @user)
+        self.current_user = @user
+        flash[:message] = 'You have logged in successfully.'
+        redirect_back_or_default(root_path)
+      else
+        render :action => "callback"
+      end
     end
   
     def failure
