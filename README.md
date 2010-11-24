@@ -10,7 +10,7 @@ To use OmniSocial in a Rails 3 application:
 
 2. Install it by running `bundle`.
 
-3. Run `rails g omnisocial` to copy an initializer, database migration and some CSS and image assets into your base application directory.
+3. Run `rails g omnisocial` to copy an initializer and some CSS and image assets into your base application directory.
 
 4. Edit `config/initializers/omnisocial.rb` and include your application's Twitter and Facebook OAuth configuration.
 

@@ -1,6 +1,15 @@
 module Omnisocial
-  class User < ActiveRecord::Base
-    has_many :login_accounts, :class_name => 'Omnisocial::LoginAccount', :dependent => :destroy
+  class User
+    include Mongoid::Document
+    include Mongoid::Timestamps
+    
+    field :remember_token
+    field :display_name
+    field :email_address
+    field :picture_url
+    
+    references_many :login_accounts, :class_name => 'Omnisocial::LoginAccount', :dependent => :destroy
+
     validates_presence_of :display_name, :email_address
   
     def facebook_account

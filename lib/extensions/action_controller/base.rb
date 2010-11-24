@@ -32,9 +32,9 @@ class ActionController::Base
   
   def current_user
     @current_user ||= if session[:user_id]
-      User.find_by_id(session[:user_id])
+      User.first(:conditions => {:id => session[:user_id]})
     elsif cookies[:remember_token]
-      User.find_by_remember_token(cookies[:remember_token])
+      User.first(:conditions => {:remember_token => cookies[:remember_token]})
     else
       false
     end

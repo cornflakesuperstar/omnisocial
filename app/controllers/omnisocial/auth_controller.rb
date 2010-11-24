@@ -25,13 +25,13 @@ module Omnisocial
         flash[:message] = 'You have logged in successfully.'
         redirect_back_or_default(root_path)
       else
-        @user = User.new(:display_name => @account.name)
+        @user = ::User.new(:display_name => @account.name)
       end
     end
     
     def confirm
       @account = Omnisocial::LoginAccount.find(params[:account_id])
-      @user = User.new(params[:omnisocial_user].merge(:picture_url => @account.picture_url))
+      @user = ::User.new(params[:user].merge(:picture_url => @account.picture_url))
       if @user.save
         @account.update_attributes(:user => @user)
         self.current_user = @user
