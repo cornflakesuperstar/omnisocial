@@ -25,6 +25,7 @@ module Omnisocial
     def self.create_from_auth_hash(auth_hash)
       account = create!
       account.assign_account_info(auth_hash)
+      account.save
       account
     end
   
