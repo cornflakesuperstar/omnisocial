@@ -5,11 +5,11 @@ require 'omnisocial/version'
 require 'bundler'
 
 Gem::Specification.new do |gem|  
-  gem.name          = 'omnisocial'
+  gem.name          = 'cornflakeomnisocial'
   gem.version       = Omnisocial::VERSION
   gem.platform      = Gem::Platform::RUBY
-  gem.authors       = ['Tim Riley']
-  gem.email         = 'tim@openmonkey.com'
+  gem.authors       = ['Jason Kotchoff']
+  gem.email         = 'jason@projectproject.com.au'
   gem.homepage      = 'http://github.com/icelab/omnisocial'
   gem.summary       = 'Twitter and Facebook logins for your Rails application.'
   gem.description   = 'Twitter and Facebook logins for your Rails application.'
