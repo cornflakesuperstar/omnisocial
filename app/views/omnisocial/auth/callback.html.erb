@@ -4,11 +4,19 @@
 <%= form_for @user, :url => confirm_path(:account_id => @account) do |f| %>
   <%= f.error_messages %>
   
-  <%= f.label :display_name %>:
-  <%= f.text_field :display_name %><br />
+  <p>
+    <%= f.label :display_name %>:
+    <%= f.text_field :display_name %>
+  </p>
   
-  <%= f.label :email_address %>:
-  <%= f.text_field :email_address %><br />
+  <p>
+    <%= f.label :email_address %>:
+    <%= f.text_field :email_address %><br />
+  </p>
 
-  <%= f.submit %>
+  <p>
+    <label>&nbsp;</label>
+    <%= f.submit %>
+  </p>
+
 <% end %>
